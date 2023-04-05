@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ object.event_name }}</h1>
+<p>Date: {{ object.event_date }}</p>
+<p>Registered Players:</p>
+<ul>
+{% for player in object.registered_players.all %}
+    <li>{{ player.nickname }} - {% for char in player.get_registered_chars %}{{ char }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+{% empty %}
+    <li>No players yet.</li>
+{% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container player">
+    <h4>{{ player.nickname }}<h4>
+    <h5>{{ player.description }}</h5>
+    </hr>
+    </br>
+    <h5>Player - {{ player.nickname }} - has these characters:</h5>
+    {% for char in player.wow_chars.all %}
+       <li>{{ char }}</li> 
+    {% endfor %}
+    </div>
+{% endblock %}

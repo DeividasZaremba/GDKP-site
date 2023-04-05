@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Events</h1>
+<ul>
+{% for event in object_list %}
+    <li><a href="{% url 'event-detail' event.pk %}">{{ event }}</a> server time</li>
+{% empty %}
+    <li>No events yet.</li>
+{% endfor %}
+</ul>
+{% endblock %}
