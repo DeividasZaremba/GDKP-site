@@ -8,10 +8,12 @@ from django.views import generic
 def index(request):
     num_chars = WowChar.objects.all().count()
     num_players = WowPlayer.objects.count()
+    num_events = EventRegistration.objects.all().count()
     
     context = {
         'num_chars': num_chars,
         'num_players': num_players,
+        'num_events': num_events,
     }
 
     return render(request, 'index.html', context=context)

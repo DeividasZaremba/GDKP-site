@@ -50,7 +50,6 @@ class WowPlayer(models.Model):
     '''Model representing the player'''
     nickname = models.CharField('Nickname', max_length=30)
     description = models.TextField('About you', max_length=2000, default='')
-    
     gold = models.IntegerField('How thick is your wallet', null=True)
     
     @property

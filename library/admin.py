@@ -6,9 +6,11 @@ from .models import WowChar, WowClass, WowPlayer, WowSpec, CharInstance, EventRe
 
 class WowCharInline(admin.TabularInline):
     model = WowChar
+    extra = 0
 
 class WowPlayerAdmin(admin.ModelAdmin):
     inlines = [WowCharInline]
+    search_fields = ('id', 'nickname')
 
 admin.site.register(WowChar)
 admin.site.register(WowSpec)
