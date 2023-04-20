@@ -70,7 +70,14 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
+LOGIN_REDIRECT_URL = '/'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_POST = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'eldracogdkp@gmail.com'
+EMAIL_HOST_PASSWORD = 'SinCityModel123'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases

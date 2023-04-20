@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView
 from .models import WowChar, WowClass, WowPlayer, WowSpec, CharInstance, EventRegistration
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
+from django.db.models import Q
 
 def index(request):
     num_chars = WowChar.objects.all().count()
@@ -46,3 +47,9 @@ class EventRegistrationListView(ListView):
 class EventRegistrationDetailView(DetailView):
     model = EventRegistration
     template_name = 'event_detail.html'
+
+
+def search(request):
+    query = request.GET.get('query')
+    search_results = WowPlayer.objects.filter(Q(nickname__icontains=query))
+    return render(request, 'search.html', {'entries': search_results, 'query': query})

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <h1>Search results by "{{query}}":</h1>
+  </br>
+  {% if entries %}
+  <h3>Players Found:</h3>
+  <ul>
+    {% for entry in entries %}
+      <p><strong><a href="{% url 'player' entry.id %}">{{ entry.nickname }}</a></strong> - View Player's profile</p>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>Nothing was found.</p>
+  {% endif %}
+  {% endblock %}
