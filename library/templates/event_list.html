@@ -2,7 +2,7 @@
 {% load week_filters %}
 {% block content %}
 
-<h1>Events</h1>
+<h1>GDKP Raids</h1>
 {% if object_list %}
   {% with month=object_list.0.event_date|date:"F Y" %}
     {% with year=object_list.0.event_date|date:"Y" %}
