@@ -94,6 +94,8 @@ class EventRegistration(models.Model):
         verbose_name_plural = 'Event Registrations'
         ordering = ['event_date']
 
+    def get_absolute_url(self):
+        return reverse('event-details', args=[str(self.pk)])
 
 class CharInstance(models.Model):
     '''Model to describe character state'''

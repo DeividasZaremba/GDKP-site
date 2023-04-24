@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.db.models import Q
 import calendar
+from django.utils import timezone
 
 def index(request):
     num_chars = WowChar.objects.all().count()
@@ -40,14 +41,19 @@ def events(request):
     }
     return render(request, 'event.html', context=context)
 
+
 class EventRegistrationListView(ListView):
     model = EventRegistration
     template_name = 'event_list.html'
+    
+    def get_queryset(self):
+        return EventRegistration.objects.all()
+
 
 
 class EventRegistrationDetailView(DetailView):
     model = EventRegistration
-    template_name = 'event_detail.html'
+    template_name = 'event_details.html'
 
 
 def search(request):
@@ -100,3 +106,9 @@ def calendar_view(request, year, month):
         'next_month': next_month,
         'next_year': next_year,
     })
+
+
+def event_details(request, event_id):
+    event = get_object_or_404(EventRegistration, id=event_id)
+    context = {'event': event}
+    return render(request, 'event_details.html', context)

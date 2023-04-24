@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load week_filters %}
 {% block content %}
 
 <h1>GDKP Raids</h1>
@@ -10,45 +9,54 @@
     <table>
       <thead>
         <tr>
-          <th>Mon</th>
-          <th>Tue</th>
-          <th>Wed</th>
-          <th>Thu</th>
-          <th>Fri</th>
-          <th>Sat</th>
-          <th>Sun</th>
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>Wednesday</th>
+          <th>Thursday</th>
+          <th>Friday</th>
+          <th>Saturday</th>
+          <th>Sunday</th>
         </tr>
       </thead>
       <tbody>
-        {% for week in object_list|week_list %}
-          <tr>
-            {% if week %}
-            {% for i in week|default:""|my_range:"7" %}
-              {% with day=week.i.0 date=week.i.1 %}
-                {% if day %}
-                  <td>
-                    <div class="day">
-                      <div class="date">{{ date|date:"j" }}</div>
-                      {% for event in day %}
-                        <div class="event">
-                          <a href="{% url 'event-detail' event.pk %}">{{ event.event_name }}</a>
-                        </div>
-                      {% empty %}
-                        <div class="no-event"></div>
-                      {% endfor %}
-                    </div>
-                  </td>
-                {% else %}
-                  <td>
-                    <div class="day">
-                      <div class="date">{{ i|add:"-6"|add:first_day|date:"j" }}</div>
-                      <div class="no-event"></div>
-                    </div>
-                  </td>
-                {% endif %}
-              {% endwith %}
-            {% endfor %}
+        <tr>
+          {% for event in object_list %}
+            {% url 'event_details' event.id as event_url %}
+            <td>
+              {% if event.event_date|date:"D" == "Mon" %}
+                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a>
+              {% endif %}
+            </td>
+            <td>
+              {% if event.event_date|date:"D" == "Tue" %}
+                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a>
+              {% endif %}
+            </td>
+            <td>
+              {% if event.event_date|date:"D" == "Wed" %}
+                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a>
             {% endif %}
+            </td>
+            <td>
+              {% if event.event_date|date:"D" == "Thu" %}
+                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a>
+              {% endif %}
+            </td>
+            <td>
+              {% if event.event_date|date:"D" == "Fri" %}
+                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a>
+              {% endif %}
+            </td>
+            <td>
+              {% if event.event_date|date:"D" == "Sat" %}
+                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a>
+              {% endif %}
+            </td>
+            <td>
+              {% if event.event_date|date:"D" == "Sun" %}
+                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a>
+              {% endif %}
+            </td>
           </tr>
         {% endfor %}
       </tbody>
