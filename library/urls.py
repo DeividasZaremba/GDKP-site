@@ -13,5 +13,4 @@ urlpatterns = [
     path('events/', views.events, name='events'),
     path('search/', views.search, name='search'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('calendar/<int:year>/<int:month>/', views.calendar_view, name='calendar_view'),
 ]

@@ -17,48 +17,46 @@
           <th>Saturday</th>
           <th>Sunday</th>
         </tr>
-      </thead>
+      </thead>    
       <tbody>
         <tr>
-          {% for event in object_list %}
             {% url 'event_details' event.id as event_url %}
             <td>
-              {% if event.event_date|date:"D" == "Mon" %}
-                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a>
-              {% endif %}
+              {% for event in object_list.Monday %}
+                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a><br><br>
+              {% endfor %}
             </td>
             <td>
-              {% if event.event_date|date:"D" == "Tue" %}
-                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a>
-              {% endif %}
+              {% for event in object_list.Tuesday %}
+                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a><br><br>
+              {% endfor %}
             </td>
             <td>
-              {% if event.event_date|date:"D" == "Wed" %}
-                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a>
-            {% endif %}
+              {% for event in object_list.Wednesday %}
+                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a><br><br>
+              {% endfor %}
             </td>
             <td>
-              {% if event.event_date|date:"D" == "Thu" %}
-                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a>
-              {% endif %}
+              {% for event in object_list.Thursday %}
+                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a><br><br>
+              {% endfor %}
             </td>
             <td>
-              {% if event.event_date|date:"D" == "Fri" %}
-                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a>
-              {% endif %}
+              {% for event in object_list.Friday %}
+                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a><br><br>
+              {% endfor %}
             </td>
             <td>
-              {% if event.event_date|date:"D" == "Sat" %}
-                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a>
-              {% endif %}
+              {% for event in object_list.Saturday %}
+                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a><br><br>
+              {% endfor %}
             </td>
             <td>
-              {% if event.event_date|date:"D" == "Sun" %}
-                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a>
-              {% endif %}
+              {% for event in object_list.Sunday %}
+                <a href="{{ event_url }}">{{ event.event_name }}<br>{{ event.event_date|date:"D d M Y H:i" }}</a><br><br>
+              {% endfor %}
             </td>
           </tr>
-        {% endfor %}
       </tbody>
     </table>
     {% endwith %}
