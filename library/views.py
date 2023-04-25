@@ -5,9 +5,12 @@ from .models import WowChar, WowClass, WowPlayer, WowSpec, CharInstance, EventRe
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from django.db.models import Q
-from django.utils import timezone
 from datetime import date
 from .forms import MyUserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import UpdateView, CreateView
 
 
 def index(request):
@@ -110,3 +113,34 @@ def register(request):
         form = MyUserCreationForm()
     return render(request, 'registration/registration.html', {'form': form})
 
+
+@login_required
+def user_profile(request):
+    player, created = WowPlayer.objects.get_or_create(user=request.user, defaults={'nickname': request.user.username})
+    context = {'player': player}
+    return render(request, 'user_profile.html', context)
+
+
+class UserProfileUpdate(LoginRequiredMixin, UpdateView):
+    model = WowPlayer
+    fields = ['description', 'gold']
+    template_name = 'user_profile_update.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user.wowplayer
+
+    def get_success_url(self):
+        return reverse_lazy('user_profile')
+
+
+class UserCreateCharacter(LoginRequiredMixin, CreateView):
+    model = WowChar
+    fields = ['char_title', 'char_class', 'char_spec']
+    template_name = 'user_create_character.html'
+
+    def form_valid(self, form):
+        form.instance.wow_player = self.request.user.wowplayer
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('user_profile')

@@ -1,7 +1,7 @@
 from django.urls import path, include
 from .views import event_details
 from . import views
-from .views import EventRegistrationListView, EventRegistrationDetailView
+from .views import EventRegistrationListView, EventRegistrationDetailView, UserProfileUpdate, UserCreateCharacter
 
 
 urlpatterns = [
@@ -14,4 +14,8 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('register/', views.register, name='register'),
+    path('user_profile/', views.user_profile, name='user_profile'),
+    path('user_profile/update/', UserProfileUpdate.as_view(), name='user_profile_update'),
+    path('user_profile/update/', UserProfileUpdate.as_view(), name='user_profile_update'),
+    path('user_profile/create_character/', UserCreateCharacter.as_view(), name='user_create_character'),
 ]

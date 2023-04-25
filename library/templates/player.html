@@ -7,7 +7,7 @@
     </hr>
     </br>
     <h5>Player - {{ player.nickname }} - has these characters:</h5>
-    {% for char in player.wow_chars.all %}
+    {% for char in player.chars.all %}
        <li>{{ char }}</li> 
     {% endfor %}
     </div>

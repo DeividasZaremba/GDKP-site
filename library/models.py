@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 import uuid
+from django.contrib.auth.models import User
 
 class WowSpec(models.Model):
     name = models.CharField('Spec', max_length=20, help_text='Character specialization.')
@@ -28,7 +29,7 @@ class WowClass(models.Model):
 class WowChar(models.Model):
     '''Describes your character'''
     char_title = models.CharField('Character name', max_length=30)
-    wow_player = models.ForeignKey('WowPlayer', on_delete=models.CASCADE, related_name='wow_chars')
+    wow_player = models.ForeignKey('WowPlayer', on_delete=models.CASCADE, related_name='chars')
     char_class = models.ForeignKey('WowClass', on_delete=models.SET_NULL, null=True)
     char_spec = models.ManyToManyField(WowSpec, help_text='Select spec for this char.')
 
@@ -51,7 +52,8 @@ class WowPlayer(models.Model):
     nickname = models.CharField('Nickname', max_length=30)
     description = models.TextField('About you', max_length=2000, default='')
     gold = models.IntegerField('How thick is your wallet', null=True)
-    
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+
     @property
     def wow_chars(self):
         return self.wow_char.all()
@@ -76,7 +78,7 @@ class WowPlayer(models.Model):
     def get_registered_chars(self):
         registered_chars = []
         for registration in self.events_registered.all():
-            registered_chars += list(registration.registered_players.filter(id=self.id).values_list('wow_chars__char_title', flat=True))
+            registered_chars += list(registration.registered_players.filter(id=self.id).values_list('chars__char_title', flat=True))
         return registered_chars
 
 
