@@ -2,11 +2,12 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
 from .models import WowChar, WowClass, WowPlayer, WowSpec, CharInstance, EventRegistration
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from django.db.models import Q
 from django.utils import timezone
 from datetime import date
+from .forms import MyUserCreationForm
 
 
 def index(request):
@@ -82,7 +83,6 @@ class EventRegistrationListView(ListView):
         return self.get_events_by_days()
 
 
-
 class EventRegistrationDetailView(DetailView):
     model = EventRegistration
     template_name = 'event_details.html'
@@ -94,8 +94,19 @@ def search(request):
     return render(request, 'search.html', {'entries': search_results, 'query': query})
 
 
-
 def event_details(request, event_id):
     event = get_object_or_404(EventRegistration, id=event_id)
     context = {'event': event}
     return render(request, 'event_details.html', context)
+
+
+def register(request):
+    if request.method == 'POST':
+        form = MyUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = MyUserCreationForm()
+    return render(request, 'registration/registration.html', {'form': form})
+

@@ -13,4 +13,5 @@ urlpatterns = [
     path('events/', views.events, name='events'),
     path('search/', views.search, name='search'),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('register/', views.register, name='register'),
 ]

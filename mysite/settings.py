@@ -56,7 +56,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,7 +77,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_POST = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'eldracogdkp@gmail.com'
-EMAIL_HOST_PASSWORD = 'SinCityModel123'
+EMAIL_HOST_PASSWORD = 'eoczpvxumgpxgkuc' ## APP Password
+# SinCityModel123
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
