@@ -1,14 +1,13 @@
 from django.contrib import admin
-
-# Register your models here.
-
 from .models import WowChar, WowClass, WowPlayer, WowSpec, CharInstance, EventRegistration
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
+
 class WowCharInline(admin.TabularInline):
     model = WowChar
     extra = 0
+
 
 class WowPlayerAdmin(admin.ModelAdmin):
     inlines = [WowCharInline]
