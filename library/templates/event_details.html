@@ -11,13 +11,24 @@
         <button type="submit" class="btn btn-danger">Unsign from Event</button>
     </form>
 {% else %}
-    <a href="{% url 'sign_event' object.id %}" class="btn btn-primary">Signup</a>
+    <a href="{% url 'sign_event' object.id %}" class="btn btn-primary">Signup</a><br>
 {% endif %}
-<br><br>
-<p>Registered Players:</p>
+<br>
+<p>Registered Players ({{ object.registered_players.all|length }}): </p>
 <ul>
     {% for player in object.registered_players.all %}
-    <li><strong>{{ player.nickname }}</strong> - {% for char in player.chars.all %}{{ char.char_title }} - {{ char.char_class }} ({% for spec in char.char_spec.all %}{{ spec.name }}{% if not forloop.last %}, {% endif %}{% endfor %}) {% endfor %}
+    <li><strong>{{ player.nickname }}</strong> - 
+        {% for char in player.chars.all %}
+        {{ char.char_title }} 
+        {% if char.char_class.class_img %}
+            <img src='{{ char.char_class.class_img.url }}' class="class_icon">
+        {% endif %}
+        ({% for spec in char.char_spec.all %}
+            {% if spec.spec_img %}
+            <img src='{{ spec.spec_img.url }}' class="class_icon">{% if not forloop.last %} / {% endif %}
+            {% endif %}
+        {% endfor %})
+    {% endfor %}
     </li>
 {% empty %}
     <ul>No players yet.</ul>

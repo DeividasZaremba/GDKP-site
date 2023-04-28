@@ -7,8 +7,17 @@
     </hr>
     </br>
     <h5>Player - {{ player.nickname }} - has these characters:</h5>
-    {% for char in player.chars.all %}
-       <li>{{ char }}</li> 
-    {% endfor %}
+        {% for char in player.chars.all %}
+            {{ char.char_title }} 
+            {% if char.char_class.class_img %}
+                <img src='{{ char.char_class.class_img.url }}' class="class_icon">
+            {% endif %}
+            ({% for spec in char.char_spec.all %}
+                {% if spec.spec_img %}
+                <img src='{{ spec.spec_img.url }}' class="class_icon">{% if not forloop.last %} / {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %})
+    </li>
     </div>
 {% endblock %}

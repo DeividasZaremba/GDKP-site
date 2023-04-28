@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 
 class WowSpec(models.Model):
     name = models.CharField('Spec', max_length=20, help_text='Character specialization.')
-
+    spec_img = models.ImageField('Spec_image', upload_to='specs', null=True)
+    
     def __str__(self):
         return self.name
 
@@ -17,7 +18,8 @@ class WowSpec(models.Model):
 
 class WowClass(models.Model):
     name = models.CharField('Class', max_length=20, help_text='Character class.')
-    class_id = models.ForeignKey('WowChar', on_delete=models.SET_NULL, null=True)
+    class_img = models.ImageField('Class_image', upload_to='class', null=True)
+
     def __str__(self):
         return self.name
 
@@ -27,7 +29,6 @@ class WowClass(models.Model):
         ordering = ['name']
 
 class WowChar(models.Model):
-    '''Describes your character'''
     char_title = models.CharField('Character name', max_length=30)
     wow_player = models.ForeignKey('WowPlayer', on_delete=models.CASCADE, related_name='chars')
     char_class = models.ForeignKey('WowClass', on_delete=models.SET_NULL, null=True)
