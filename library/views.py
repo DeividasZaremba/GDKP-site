@@ -1,17 +1,16 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
-from .models import WowChar, WowClass, WowPlayer, WowSpec, CharInstance, EventRegistration
+from .models import WowChar, WowPlayer, EventRegistration
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views import generic
 from django.db.models import Q
 from datetime import date
-from .forms import MyUserCreationForm
+from .forms import MyUserCreationForm, EventRegistrationForm
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.edit import UpdateView, CreateView
-
+from django.views import View
+from django.http import HttpResponseRedirect
 
 def index(request):
     num_chars = WowChar.objects.all().count()
@@ -144,3 +143,40 @@ class UserCreateCharacter(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('user_profile')
+
+
+class RegisterEventView(UserPassesTestMixin, View):
+    raise_exception = True
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='Leader').exists()
+
+    def get(self, request, *args, **kwargs):
+        form = EventRegistrationForm()
+        return render(request, 'event_registration_form.html', {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = EventRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('event-list')
+        return render(request, 'event_registration_form.html', {'form': form})
+    
+def handler403(request, exception=None):
+    return render(request, '403.html', status=403)
+
+
+@login_required
+def sign_event(request, event_id):
+    event = get_object_or_404(EventRegistration, id=event_id)
+    wow_player = request.user.wowplayer
+    event.registered_players.add(wow_player)
+    event.save()
+    return HttpResponseRedirect(reverse('event_details', args=[str(event_id)]))
+
+@login_required
+def unsign_event(request, event_id):
+    event = get_object_or_404(EventRegistration, pk=event_id)
+    player = request.user.wowplayer
+    event.registered_players.remove(player)
+    return HttpResponseRedirect(reverse('event_details', args=[str(event_id)]))

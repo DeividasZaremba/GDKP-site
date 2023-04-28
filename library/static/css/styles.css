@@ -1,3 +1,6 @@
+@import url('https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css');
+
+
 .sidebar-nav {
     margin-top: 20px;
     padding: 0;
@@ -29,4 +32,19 @@ th, td {
     vertical-align: middle;
     padding: 10px;
     width: 14.28%;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 10px;
+    background-color: #263544;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    border-color: #263544;
+    font-size: 16px;
+}
+
+.btn:hover {
+    background-color: #32465a;
 }

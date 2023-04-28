@@ -4,11 +4,11 @@
   <h1>{{ player.nickname }}'s Profile</h1>
   <p>About you: {{ player.description }}</p>
   <p>Gold: {{ player.gold }}</p>
-  <a href="{% url 'user_profile_update' %}">Edit Profile</a><br><br>
-  <h2>Characters</h2>
+  <a href="{% url 'user_profile_update' %}" class="btn btn-primary">Edit Profile</a><br><br>
+  <h3>Characters</h3>
   <br>
-  <a href="{% url 'user_create_character' %}">Create new character</a>
-  <br>
+  <a href="{% url 'user_create_character' %}" class="btn btn-primary">Create new character</a>
+  <br><br>
   <table>
     <thead>
       <tr>

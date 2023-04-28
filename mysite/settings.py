@@ -68,6 +68,7 @@ TEMPLATES = [
         },
     },
 ]
+HANDLER403 = 'library.views.handler403'
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 LOGIN_REDIRECT_URL = '/'

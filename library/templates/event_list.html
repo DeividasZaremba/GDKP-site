@@ -2,6 +2,12 @@
 {% block content %}
 
 <h1>GDKP Raids</h1>
+{% load user_tags %}
+<br>
+{% if request.user|has_group:"Leader" %}
+    <a href="{% url 'register_event' %}" class="btn btn-primary">Register Event</a>
+{% endif %}<br><br>
+
 {% if object_list %}
   <table>
     <thead>

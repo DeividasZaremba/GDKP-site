@@ -85,7 +85,7 @@ class WowPlayer(models.Model):
 class EventRegistration(models.Model):
     event_name = models.CharField('Event Name', max_length=50)
     event_date = models.DateTimeField('Event Date and Time', help_text='Select the event date and time')
-    event_info = models.TextField('Info about event', max_length=1000, default='')
+    event_info = models.TextField('Event Info', max_length=1000, default='')
     registered_players = models.ManyToManyField(WowPlayer, related_name='events_registered', blank=True)
 
     def __str__(self):

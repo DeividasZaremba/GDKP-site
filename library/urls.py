@@ -18,4 +18,7 @@ urlpatterns = [
     path('user_profile/update/', UserProfileUpdate.as_view(), name='user_profile_update'),
     path('user_profile/update/', UserProfileUpdate.as_view(), name='user_profile_update'),
     path('user_profile/create_character/', UserCreateCharacter.as_view(), name='user_create_character'),
+    path('register_event/', views.RegisterEventView.as_view(), name='register_event'),
+    path('sign_event/<int:event_id>/', views.sign_event, name='sign_event'),
+    path('unsign_event/<int:event_id>/', views.unsign_event, name='unsign_event'),
 ]

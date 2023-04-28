@@ -3,11 +3,22 @@
 {% block content %}
 <h1>{{ object.event_name }}</h1>
 <p>Date: {{ object.event_date|date:"D d M Y H:i" }}</p>
+<p>{{ object.event_info }}</p>
+
+{% if request.user.is_authenticated and request.user.wowplayer in object.registered_players.all %}
+    <form method="POST" action="{% url 'unsign_event' object.pk %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Unsign from Event</button>
+    </form>
+{% else %}
+    <a href="{% url 'sign_event' object.id %}" class="btn btn-primary">Signup</a>
+{% endif %}
+<br><br>
 <p>Registered Players:</p>
 <ul>
     {% for player in object.registered_players.all %}
-    <li>{{ player.nickname }} - {% for char in player.get_registered_chars %}{{ char }}{% if not forloop.last %}, {% endif %}
-    {% endfor %}</li>
+    <li><strong>{{ player.nickname }}</strong> - {% for char in player.chars.all %}{{ char.char_title }} - {{ char.char_class }} ({% for spec in char.char_spec.all %}{{ spec.name }}{% if not forloop.last %}, {% endif %}{% endfor %}) {% endfor %}
+    </li>
 {% empty %}
     <ul>No players yet.</ul>
 {% endfor %}
