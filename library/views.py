@@ -8,7 +8,7 @@ from .forms import MyUserCreationForm, EventRegistrationForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic.edit import UpdateView, CreateView
+from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.views import View
 from django.http import HttpResponseRedirect
 
@@ -122,7 +122,7 @@ def user_profile(request):
 
 class UserProfileUpdate(LoginRequiredMixin, UpdateView):
     model = WowPlayer
-    fields = ['description', 'gold']
+    fields = ['discord_tag', 'description', 'gold']
     template_name = 'user_profile_update.html'
 
     def get_object(self, queryset=None):
@@ -144,6 +144,15 @@ class UserCreateCharacter(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('user_profile')
 
+
+class UserDeleteCharacter(LoginRequiredMixin, DeleteView):
+    model = WowChar
+    template_name = 'user_delete_character.html'
+    success_url = reverse_lazy('user_profile')
+    
+    def get_queryset(self):
+        return super().get_queryset().filter(wow_player=self.request.user.wowplayer)
+    
 
 class RegisterEventView(UserPassesTestMixin, View):
     raise_exception = True

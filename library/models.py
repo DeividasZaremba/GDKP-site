@@ -39,7 +39,6 @@ class WowChar(models.Model):
         return f'{self.char_title} - {self.char_class} ({" / ".join(spec_names)})'
 
     def get_absolute_url(self):
-        '''Displays concrete return address'''
         return reverse('char-detail', args=[str(self.id)])
 
     class Meta:
@@ -49,8 +48,8 @@ class WowChar(models.Model):
 
 
 class WowPlayer(models.Model):
-    '''Model representing the player'''
     nickname = models.CharField('Nickname', max_length=30)
+    discord_tag = models.CharField('Discord tag', max_length=30, null=True, blank=True)
     description = models.TextField('About you', max_length=2000, default='')
     gold = models.IntegerField('How thick is your wallet', null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
@@ -65,11 +64,9 @@ class WowPlayer(models.Model):
         ordering = ['nickname']
 
     def get_absolute_url(self):
-        '''Returns the url to access particular player instance'''
         return reverse('player-detail', args=[str(self.id)])
     
     def __str__(self):
-        '''String for representing the model object'''
         return f'{self.nickname}'
 
     def display_chars(self):
@@ -101,7 +98,6 @@ class EventRegistration(models.Model):
         return reverse('event-details', args=[str(self.pk)])
 
 class CharInstance(models.Model):
-    '''Model to describe character state'''
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique character ID.')
     char = models.ForeignKey('WoWChar', on_delete=models.SET_NULL, null=True)
     due_back = models.DateField('Will be available.', null=True, blank=True)

@@ -5,10 +5,11 @@ from .models import EventRegistration
 
 class MyUserCreationForm(UserCreationForm):
     email = forms.EmailField()
+    discord_tag = forms.CharField(max_length=30)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'discord_tag', 'email', 'password1', 'password2']
 
 
 class EventRegistrationForm(forms.ModelForm):
@@ -18,6 +19,6 @@ class EventRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = EventRegistration
-        fields = ['event_name', 'event_date', 'event_info']
+        fields = ['event_name', 'event_date', 'event_info', 'registered_players']
 
 

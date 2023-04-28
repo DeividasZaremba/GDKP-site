@@ -1,10 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% load static %}
+<script src="{% static 'js/delete-confirmation.js' %}"></script>
+
   <h1>{{ player.nickname }}'s Profile</h1>
+  <p>Discord: {% if player.discord_tag %}
+      {{ player.discord_tag }}
+    {% else %}
+      <span style="color:red;font-weight:bold;">Please update</span>
+    {% endif %}</p>
   <p>About you: {{ player.description }}</p>
-  <p>Gold: {{ player.gold }}</p>
-  <a href="{% url 'user_profile_update' %}" class="btn btn-primary">Edit Profile</a><br><br>
+  <p>Gold:  {% if player.gold %}
+              {{ player.gold }}
+            {% else %}
+              <span class="profile-warning">Please update</span>
+            {% endif %}</p>
+  <a href="{% url 'user_profile_update' %}" class="btn btn-primary">Update profile</a><br><br>
   <h3>Characters</h3>
   <br>
   <a href="{% url 'user_create_character' %}" class="btn btn-primary">Create new character</a>
@@ -15,24 +27,33 @@
         <th>Character Name</th>
         <th>Class</th>
         <th>Spec</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
-        {% for char in player.chars.all %}
-        <tr>
+      {% for char in player.chars.all %}
+      <tr>
           <td>{{ char.char_title }}</td>
           <td>{{ char.char_class }}</td>
           <td>
-            {% for spec in char.char_spec.all %}
-              {{ spec.name }}{% if not forloop.last %}, {% endif %}
-            {% endfor %}
+              {% for spec in char.char_spec.all %}
+                  {{ spec.name }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
           </td>
-        </tr>
+          <td>
+              <form action="{% url 'user_delete_character' char.pk %}" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="next" value="{% url 'user_profile' %}">
+                  <button type="button" class="btn btn-danger" onclick="confirmDelete(this)">Delete</button>
+              </form>
+          </td>
+      </tr>
       {% empty %}
-        <tr>
-          <td colspan="3">No characters found.</td>
-        </tr>
+      <tr>
+          <td colspan="4">No characters found.</td>
+      </tr>
       {% endfor %}
-    </tbody>
+  </tbody>
+
   </table>
 {% endblock %}

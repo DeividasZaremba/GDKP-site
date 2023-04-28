@@ -17,7 +17,7 @@
 <p>Registered Players ({{ object.registered_players.all|length }}): </p>
 <ul>
     {% for player in object.registered_players.all %}
-    <li><strong>{{ player.nickname }}</strong> - 
+    <li><strong><a href="{% url 'player' player.id %}">{{ player.nickname }}</a></strong> - 
         {% for char in player.chars.all %}
         {{ char.char_title }} 
         {% if char.char_class.class_img %}
