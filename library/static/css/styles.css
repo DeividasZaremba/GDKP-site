@@ -1,18 +1,68 @@
 @import url('https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css');
 
-
-.sidebar-nav {
-    margin-top: 20px;
-    padding: 0;
-    list-style: none;
-}
-
 body {
     background-image: url('/media/LK_Background.jpg');
     background-size: cover;
     width: 100%;
     height: 100%;
     color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+main {
+    flex: 1;
+}
+
+header {
+    overflow: hidden;
+    background-color: #0e1d2b;
+    color: whitesmoke;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons {
+    float: left;
+    color: whitesmoke;
+    text-align: center;
+    padding: 15px 30px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.buttons:hover {
+    color: whitesmoke;
+    background-color: #32465a;
+    font-size: 15px;
+}
+
+.right-menu {
+    display: inline;
+    float: right
+}
+
+.right-menu form {
+    padding-top: 7px;
+    padding-right: 15px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.content {
+    margin-top: 100px;
+    width: 80%;
+    margin: 0 auto;
 }
 
 .profile-warning {
@@ -25,22 +75,23 @@ body {
     height: 1em;
 }
 
-ul {
-    margin-block-start: 0px;
-    margin-block-end: 0px;
-    padding-top: 20px;
-    padding-bottom: 10px;
-    padding-inline-start: 5px;
+.pricelist {
+    display: inline-block;
+    width: 40%;
+    margin: 0 auto; 
 }
+
+
 
 table {
   border-collapse: collapse;
   table-layout: fixed;
   width: 100%;
+  
 }
 
 th, td {
-    border: 1px solid black;
+    border: 1px solid rgb(190, 189, 189);
     text-align: center;
     vertical-align: middle;
     padding: 10px;
@@ -59,5 +110,14 @@ th, td {
 }
 
 .btn:hover {
+    background-color: #32465a;
+}
+
+.events-body {
+    text-decoration: none !important;
+    color: inherit !important;
+}
+
+.events-body:hover {
     background-color: #32465a;
 }

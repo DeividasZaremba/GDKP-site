@@ -38,6 +38,11 @@ def player(request, player_id):
     single_player = get_object_or_404(WowPlayer, pk=player_id)
     return render(request, 'player.html', {'player': single_player})
 
+def rules(request):
+    return render(request, 'rules.html')
+
+def prices(request):
+    return render(request, 'prices.html')
 
 def events(request):
     context = {

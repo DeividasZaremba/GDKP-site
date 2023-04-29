@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% load static %}
-<script src="{% static 'js/delete-confirmation.js' %}"></script>
 
   <h1>{{ player.nickname }}'s Profile</h1>
   <p>Discord: {% if player.discord_tag %}

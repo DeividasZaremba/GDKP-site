@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+
 <h1>{{ object.event_name }}</h1>
 <p>Date: {{ object.event_date|date:"D d M Y H:i" }}</p>
 <p>{{ object.event_info }}</p>
@@ -8,9 +10,9 @@
 {% if request.user.is_authenticated and request.user.wowplayer in object.registered_players.all %}
     <form method="POST" action="{% url 'unsign_event' object.pk %}">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Unsign from Event</button>
+        <button type="submit" class="btn btn-danger" onclick="confirmUnsign(this)">Unsign from Event</button>
     </form>
-{% else %}
+{% elif request.user.is_authenticated %}
     <a href="{% url 'sign_event' object.id %}" class="btn btn-primary">Signup</a><br>
 {% endif %}
 <br>
