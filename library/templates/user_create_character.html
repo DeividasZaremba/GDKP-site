@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <h2>Create a New Character</h2>
-
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
+    <h2>Create a New Character</h2><br>
     <div class="form-group">
       <label for="{{ form.char_title.id_for_label }}">Character Name:</label>
       {{ form.char_title }}
@@ -19,5 +18,4 @@
     </div>
     <button type="submit" class="btn btn-primary">Create Character</button>
   </form>
-
 {% endblock %}

@@ -23,7 +23,7 @@
 
     {% if user.is_authenticated %}
       <a href="{% url 'user_profile' %}" class="buttons">
-      {{ user.get_username }}</a>
+      My profile: {{ user.get_username }}</a>
     <a href="{% url 'logout'%}" class="buttons">Logout</a>
 
     {% else %}

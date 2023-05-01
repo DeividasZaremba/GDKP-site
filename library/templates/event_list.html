@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
+
 {% block content %}
+{% load user_tags %}
 
 <h1>GDKP Raids</h1>
-{% load user_tags %}
+
 <br>
 {% if request.user|has_group:"Leader" %}
     <a href="{% url 'register_event' %}" class="btn btn-primary">New Event</a>

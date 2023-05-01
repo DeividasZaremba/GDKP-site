@@ -50,7 +50,7 @@ class WowChar(models.Model):
 class WowPlayer(models.Model):
     nickname = models.CharField('Nickname', max_length=30)
     discord_tag = models.CharField('Discord tag', max_length=30, null=True, blank=True)
-    description = models.TextField('About you', max_length=2000, default='')
+    description = models.TextField('About you', max_length=2000, default='', null=True, blank='True')
     gold = models.IntegerField('How thick is your wallet', null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
 

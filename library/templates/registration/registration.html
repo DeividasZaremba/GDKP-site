@@ -2,25 +2,32 @@
 
 {% block content %}
 <body>
-    <h1>Register</h1>
     <form method="post">
         {% csrf_token %}
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" required>
+        <h1>Register</h1><br>
+        <input type="text" name="username" id="username" placeholder="Your username" required>
         <br>
-        <label for="discord_tag">Discord tag:</label>
-        <input type="text" name="discord_tag" id="discord_tag" required>
+        <input type="text" name="discord_tag" id="discord_tag" placeholder="Discord tag" required>
         <br>
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" required>
+        <input type="email" name="email" id="email" placeholder="Email address" required>
         <br>
-        <label for="password1">Password:</label>
-        <input type="password" name="password1" id="password1" required>
+        <input type="password" name="password1" id="password1" placeholder="Password" required>
         <br>
-        <label for="password2">Confirm Password:</label>
-        <input type="password" name="password2" id="password2" required>
+        <input type="password" name="password2" id="password2" placeholder="Confirm password" required>
+        <br>
         <br>
         <input type="submit" value="Register" class="btn btn-primary">
     </form>
+    {% if errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for field, error_list in errors %}
+            {% for error in error_list %}
+            <li>{{ field }}: {{ error }}</li>
+            {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
 </body>
 {% endblock %}

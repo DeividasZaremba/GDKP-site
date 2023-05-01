@@ -2,7 +2,7 @@
 
 {% block content %}
 
-  <h1>{{ player.nickname }}'s Profile</h1>
+  <h1>{{ player.nickname }}'s profile</h1>
   <p>Discord: {% if player.discord_tag %}
       {{ player.discord_tag }}
     {% else %}
@@ -32,7 +32,7 @@
       {% for char in player.chars.all %}
       <tr>
           <td>{{ char.char_title }}</td>
-          <td>{{ char.char_class }}</td>
+          <td><span class="{{ char.char_class }}"><span class="char-title">{{ char.char_class }}</span></span></td>
           <td>
               {% for spec in char.char_spec.all %}
                   {{ spec.name }}{% if not forloop.last %}, {% endif %}

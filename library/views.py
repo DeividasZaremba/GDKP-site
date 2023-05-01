@@ -8,6 +8,7 @@ from .forms import MyUserCreationForm, EventRegistrationForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth import authenticate, login
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.views import View
 from django.http import HttpResponseRedirect
@@ -111,11 +112,17 @@ def register(request):
     if request.method == 'POST':
         form = MyUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('login')
+            user = form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('user_profile')
     else:
         form = MyUserCreationForm()
-    return render(request, 'registration/registration.html', {'form': form})
+
+    errors = form.errors.items() if form.errors else None
+    return render(request, 'registration/registration.html', {'form': form, 'errors': errors})
 
 
 @login_required

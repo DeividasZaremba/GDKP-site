@@ -6,26 +6,21 @@
     <h5>{{ player.discord_tag }}</h5>
     <h6>{{ player.description }}</h6>
     {% if request.user|has_group:"Leader" %}
-        <p>Pockets: {{ player.gold }} gold (visible only to leaders)</p>
+        <p>Pockets: {{ player.gold }} gold (visible to leaders only)</p>
     {% endif %}<br>
     </hr>
     </br>
     <h5>Player - {{ player.nickname }} - has these characters:</h5>
-        {% if player.chars %}
-            {% for char in player.chars.all %}
-                {{ char.char_title }} 
-                {% if char.char_class.class_img %}
-                    <img src='{{ char.char_class.class_img.url }}' class="class_icon">
-                {% endif %}
-                ({% for spec in char.char_spec.all %}
-                    {% if spec.spec_img %}
-                    <img src='{{ spec.spec_img.url }}' class="class_icon">{% if not forloop.last %} / {% endif %})
-                    {% endif %}
-                {% endfor %}
-            {% endfor %}
-        {% else %}
-            <p>No characters registered.</p>
-        {% endif %}
-    </li>
+    {% for player in player.chars.all %}
+        <li><span class="{{ player.char_class }}"><span class="char-title">{{ player.char_title }}</span></span>
+        ({% for spec in player.char_spec.all %}
+            {% if spec.spec_img %}
+                <img src='{{ spec.spec_img.url }}' class="class_icon">{% if not forloop.last %} / {% endif %}
+            {% endif %}
+        {% endfor %}){% if not forloop.last %}, {% endif %}
+        </li>
+    {% empty %}
+        <ul>No registered characters yet.</ul>
+    {% endfor %}
     </div>
 {% endblock %}
