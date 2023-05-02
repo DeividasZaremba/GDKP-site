@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+  <h2><strong>Eldraco GDKP Price list</strong></h2>
+  <h4>These prices are starting bids, and will be auctioned as normal GDKP rules.</h4>
+  <br>
+  <table>
+    <thead>
+        <tr>
+            <th>Item name</th>
+            <th>Starting bid</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in data %}
+        <tr>
+            <td><a href="{{ item.2 }}" class="q4" target="_blank">{{ item.0 }}</a></td>
+            <td>{{ item.1 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

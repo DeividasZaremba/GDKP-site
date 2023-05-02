@@ -1,7 +1,7 @@
 from django.urls import path, include
 from .views import event_details
 from . import views
-from .views import EventRegistrationListView, EventRegistrationDetailView, UserProfileUpdate, UserCreateCharacter, UserDeleteCharacter
+from .views import EventRegistrationListView, EventRegistrationDetailView, UserProfileUpdate, UserCreateCharacter, UserDeleteCharacter, price_list
 
 
 urlpatterns = [
@@ -12,7 +12,7 @@ urlpatterns = [
     path('events/<int:pk>/', EventRegistrationDetailView.as_view(), name='event_details'),
     path('events/', views.events, name='events'),
     path('rules/', views.rules, name='rules'),
-    path('prices/', views.prices, name='prices'),
+    path('price_list/', price_list, name='price_list'),
     path('search/', views.search, name='search'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('register/', views.register, name='register'),

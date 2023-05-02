@@ -9,3 +9,8 @@ function confirmUnsign(button) {
         button.form.submit();
     }
 }
+
+const whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: true};
+const scriptTag = document.createElement('script');
+scriptTag.src = 'https://wow.zamimg.com/js/tooltips.js';
+document.body.appendChild(scriptTag);

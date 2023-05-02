@@ -1,17 +1,21 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView
-from .models import WowChar, WowPlayer, EventRegistration
-from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Q
-from datetime import date
 from .forms import MyUserCreationForm, EventRegistrationForm
-from django.contrib.auth.decorators import login_required
-from django.urls import reverse_lazy, reverse
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from .models import WowChar, WowPlayer, EventRegistration
+from django.conf import settings
 from django.contrib.auth import authenticate, login
-from django.views.generic.edit import UpdateView, CreateView, DeleteView
-from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views import View
+from django.views.generic.edit import UpdateView, CreateView, DeleteView
+from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy, reverse
+
+import codecs
+import csv
+import os
+from datetime import date
 
 def index(request):
     num_chars = WowChar.objects.all().count()
@@ -195,9 +199,20 @@ def sign_event(request, event_id):
     event.save()
     return HttpResponseRedirect(reverse('event_details', args=[str(event_id)]))
 
+
 @login_required
 def unsign_event(request, event_id):
     event = get_object_or_404(EventRegistration, pk=event_id)
     player = request.user.wowplayer
     event.registered_players.remove(player)
     return HttpResponseRedirect(reverse('event_details', args=[str(event_id)]))
+
+
+def price_list(request):
+    file_path = os.path.join(settings.MEDIA_ROOT, 'pricelist', 'price_list.csv')
+    with open(file_path, 'r', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        data = list(reader)
+
+    context = {'data': data}
+    return render(request, 'price_list.html', context)
