@@ -79,8 +79,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_POST = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'eldracogdkp@gmail.com'
-EMAIL_HOST_PASSWORD = 'eoczpvxumgpxgkuc' ## APP Password
-# SinCityModel123
+EMAIL_HOST_PASSWORD = 'eoczpvxumgpxgkuc' ## hashed for safety purposes
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
